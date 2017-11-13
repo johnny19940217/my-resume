@@ -1,0 +1,23 @@
+{% extends "resume-base.html" %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block head %}
+  {{ super () }}
+{% endblock %}
+
+{% block page_content %}
+
+  <div class="container">
+    <img class= "rounded-circle" src="{{ url_for('static', filename='img/dog.jpg') }}" alt="picture" width="200">
+    <h1 class="mt-5"><i class="fa fa-user-o" aria-hidden="true">Home Page</i></h1>
+    <h1 class="mt-5"><i class="fa fa-id-card" aria-hidden="true">Personal Information</i></h1>
+<!-- Styling -->
+    <style>
+      div {
+        text-align: center;
+        color: black;
+      }
+    </style>
+  </div>
+{% endblock %}
