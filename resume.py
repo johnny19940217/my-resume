@@ -20,7 +20,7 @@ class Professor(db.Model):
 class Course(db.Model):
     __tablename__ = 'courses'
     id = db.Column(db.Integer, primary_key=True)
-    course_number = db.Column(db.String(60))
+    number = db.Column(db.String(60))
     title = db.Column(db.String(256))
     description = db.Column(db.Text)
     professor_id = db.Column(db.Integer, db.ForeignKey('professors.id'))
@@ -78,16 +78,16 @@ def courses():
 def add_courses():
     if request.method == 'GET':
         professors = Professor.query.all()
-        return render_template('course-add.html', courses=courses, professors=professors)
+        return render_template('course-add.html', professors=professors)
 
     if request.method == 'POST':
         # get data from the form
-        course_number = request.form['course_number']
+        number = request.form['number']
         title = request.form['title']
         description = request.form['description']
         professor_name = request.form['professor']
         professor = Professor.query.filter_by(name=professor_name).first()
-        course = Course(course_number=course_number,title=title, description=description)
+        course = Course(number=number,title=title, description=description)
 
         # insert the data into the database
         db.session.add(course)
@@ -103,7 +103,7 @@ def edit_course(id):
         return render_template('course-edit.html', course=course, professors=professors)
     if request.method == 'POST':
         # update data based on the form data
-        course_number = request.form['course_number']
+        course.number = request.form['number']
         course.title = request.form['title']
         course.description = request.form['description']
         professor_name = request.form['professor']
@@ -111,7 +111,7 @@ def edit_course(id):
         course.professor = professor
         # update the database
         db.session.commit()
-        return redirect(url_for('course'))
+        return redirect(url_for('courses'))
 
 if __name__ == '__main__':
     app.run(debug=True)
